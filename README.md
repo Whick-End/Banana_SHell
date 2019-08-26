@@ -1,6 +1,8 @@
 # Banana_SHell
 Banana SHell, is a friendly shell, cute, don't step on it ! ^^
 
+  ![images/Banana_SHell_view](images/Banana_SHell_view.png)
+
 ## Features
   
   * Support all of your command, like **ls**, **mkdir**, **pwd**, ... All ! ^^
