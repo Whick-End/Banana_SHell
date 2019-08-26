@@ -20,6 +20,7 @@ Banana SHell, is a friendly shell, cute, don't step on it ! ^^
 ## Make
   
   * To install the Banana SHell, on your computer, type **make install**
+  * To uninstall the Banana SHell, type **make uninstall**
   * To compile Banana SHell, type **make**
   * To count number of line the project contains, type **make line**
   
