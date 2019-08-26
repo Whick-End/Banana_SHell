@@ -26,7 +26,7 @@ uninstall:
 		echo "Removing...";                                 \
 		sudo rm -f /bin/bsh && echo "Remove successfully";  \
 	else                                                    \
-	echo "Banana SHell is not installed";               \
+	echo "Banana SHell is not installed";                   \
 	fi;
 
 line: line_out
