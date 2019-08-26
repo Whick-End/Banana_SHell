@@ -15,7 +15,7 @@ Banana SHell, is a friendly shell, cute, don't step on it ! ^^
   
   * To install the Banana SHell, on your computer, type **make install**
   * To compile Banana SHell, type **make**
-  * To count number of line the project contains type **make line**
+  * To count number of line the project contains, type **make line**
   
   **PS**: make line, was for show me how I reduce the code, because less is better !
   
