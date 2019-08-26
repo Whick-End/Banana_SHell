@@ -15,7 +15,7 @@ Banana SHell, is a friendly shell, cute, don't step on it ! ^^
     * **exit** command, to exit the shell
     * **cd** command, if you type just cd, you gonna home directory
     * **help** command, show you specific command, if you forgot it
-    * **banana** command, show the Author (Me), data of the last update, and my github
+    * **banana** command, show the Author (Me), date of the last update, and my github
     
    ![images/Banana_SHell_view_famous_command](/Images/Banana_SHell_view_famous_command.png)
     
