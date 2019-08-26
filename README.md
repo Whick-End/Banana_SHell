@@ -26,6 +26,6 @@ Banana SHell, is a friendly shell, cute, don't step on it ! ^^
   
   **PS**: make line, was for show me how I reduce the code, because ***less is better !***
   
-## Diagram Of my codes
+## Diagram Of Codes
   
   ![images/Banana_SHell_Diagram](/diagram/Banana_SHell_Diagram.jpg)
