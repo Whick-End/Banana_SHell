@@ -5,7 +5,7 @@
 
 compile:
 		echo "Compiling.."
-		$(CC) -Wall -Wextra -Werror Banana_shell.h Main.c Banana_shell.c Banana_loop Banana_shell_functions.c Banana_print_functions.c -o bsh
+		$(CC) -Wall -Wextra -Werror Banana_shell.h Main.c Banana_shell.c Banana_loop.c Banana_shell_functions.c Banana_print_functions.c -o bsh
 		echo "Compile successfully"
 
 install: compile
