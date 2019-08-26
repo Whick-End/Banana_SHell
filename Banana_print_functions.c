@@ -50,9 +50,9 @@ int print_banana_help(void) {
                       (#\n\
                       /#(\n\
                     ***/##/       %sBanna Shell Command%s\n\
-                   /***/(##          %s-exit    %s// To exit the shell%s\n\
-                   ****/(##(         %s-help    %s// To get help like that%s\n\
-                   ****/(###         %s-banana  %s// To see the Author and his github%s\n\
+                   /***/(##         %s-exit    %s// To exit the shell%s\n\
+                   ****/(##(        %s-help    %s// To get help like that%s\n\
+                   ****/(###        %s-banana  %s// To see the Author and his github%s\n\
                    *****(###           %sEnjoy !%s\n\
                    ****#(###       &\n\
                   ****/((###     /*(*\n\
