@@ -5,7 +5,7 @@
 
 compile: main.c Banana_shell.c Banana_loop.c  Banana_shell_functions.c Banana_print_functions.c
 	echo "Compiling.."
-	gcc -Wall -Wextra -Werror Banana_shell.h Banana_shell.c Banana_loop.c Banana_shell_functions.c Banana_print_functions.c main.c -o bsh
+	gcc -Wall -Wextra -Werror Banana_shell.h Banana_shell.c Banana_loop.c Banana_shell_functions.c Banana_print_functions.c Main.c -o bsh
 	echo "Compilation finished successfully"
 
 
