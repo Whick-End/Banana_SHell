@@ -19,5 +19,7 @@ Banana SHell, is a friendly shell, cute, don't step on it ! ^^
   * To compile Banana SHell, type **make**
   * To count number of line the project contains, type **make line**
   
+   ![images/Banana_SHell_view_banana_command](/Images/Banana_SHell_view_banana_command.png)
+  
   **PS**: make line, was for show me how I reduce the code, because less is better !
   
