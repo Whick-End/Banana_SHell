@@ -7,6 +7,8 @@ Banana SHell, is a friendly shell, cute, don't step on it ! ^^
   
   * Support all of your command, like **ls**, **mkdir**, **pwd**, ... All ! ^^
   
+  * He support also **Ctrl-C**, and **Ctrl-D** to exit the shell
+  
   * You can do pipe, like that **ls | wc**, or what you want
   
   * Specific commands, are **help** and **banana**
