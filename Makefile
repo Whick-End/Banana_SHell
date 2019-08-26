@@ -4,17 +4,10 @@
 .DEFAULT_GOAL = compile
 
 compile:
-	if [ -f "Banana_shell.h" ] && [ -f "a.c" ]\
-	&&  [ -f "Banana_shell.c" ] && [ -f "Banana_loop.c" ]\
-	&& [ -f "Banana_shell_functions.c" ] && [ -f "Banana_print_functions.c" ];\
-	then\
-		echo "Compiling..";\
-		$(CC) -Wall -Wextra -Werror Banana_shell.h Main.c Banana_shell.c Banana_loop.c\
-		Banana_shell_functions.c Banana_print_functions.c -o bsh;\
-		echo "Compile successfully";\
-	else\
-		echo "You're missing files, check the github: https://github.com/Cobraxo/Banana_SHell";\
-	fi
+		echo "Compiling.."
+		$(CC) -Wall -Wextra -Werror Banana_shell.h Main.c Banana_shell.c Banana_loop.c
+		Banana_shell_functions.c Banana_print_functions.c -o bsh
+		echo "Compile successfully"
 
 install: compile
 	sudo mv bsh /bin/bsh
