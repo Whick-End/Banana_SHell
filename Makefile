@@ -3,6 +3,8 @@
 
 .DEFAULT_GOAL = compile
 
+GREP_LINE = $(shell wc -l Banana_loop.c Banana_shell.c Banana_shell_functions.c Banana_shell.h Banana_print_functions.c Main.c | grep -E ".[0-9]+ total")
+
 compile: Main.c Banana_shell.c Banana_loop.c  Banana_shell_functions.c Banana_print_functions.c
 	echo "Compiling.."
 	gcc -Wall -Wextra -Werror Banana_shell.h Banana_shell.c Banana_loop.c Banana_shell_functions.c Banana_print_functions.c Main.c -o bsh
@@ -22,8 +24,5 @@ uninstall:
 		echo "Banana SHell is not installed";\
 	fi;
 
-line: line_out
-	echo "Banan SHell contains:\n$(GREP_LINE) lines !"
-
-line_out:
-	GREP_LINE := $(shell wc -l Banana_loop.c Banana_shell.c Banana_shell_functions.c Banana_shell.h Banana_print_functions.c Main.c | grep -E ".[0-9]+ total")
+line: 
+	echo "Banana SHell contains:\n$(GREP_LINE) lines !"
