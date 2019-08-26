@@ -6,9 +6,10 @@ char shell_continue;
 
 int print_banana_shell(void) {
 
-    char *current_directory = NULL, hostname[2048];
     int status_hostname = 0;
-    
+    char *current_directory = NULL, *home_directory = NULL;
+    char hostname[2048];
+
     passwd *pw = NULL;
     uid_t uid = -2;
 
@@ -28,12 +29,18 @@ int print_banana_shell(void) {
     // Get current directory
     current_directory = getcwd(NULL, 0);
     
+    // Get home directory
+    home_directory = getHomeDirectory();
+
+    if (!home_directory || errno)
+        return -1;
+
     if (!current_directory || errno)
         return -1;
     
     // Print CLI and if the current directory is home directory of user, just print ~
     (void)fprintf(stdout ,"%s%s%s:%s%s %s%s%s /> ", YELLOW, hostname, RESET, YELLOW, pw->pw_name, GREEN, 
-    (strcmp(current_directory, getHomeDirectory()) == 0) ? "~" : current_directory, RESET);
+    (strcmp(current_directory, home_directory) == 0) ? "~" : current_directory, RESET);
     
     return 0;
 
@@ -115,7 +122,7 @@ char *getHomeDirectory(void) {
     pw = getpwuid(getuid());
 
     if (!pw || errno)
-        perror("");
+        return NULL;
 
      return pw->pw_dir;
 
@@ -219,10 +226,12 @@ int start_processes(char **m_args) {
     // Child process
     if (pid == 0) {
 
+        // Normally, execvp not pop RIP register from the stack
         if (execvp(m_args[0], m_args) == -1 || errno)
             perror(m_args[0]);
 
-        exit(0);
+        // Often when the command are wrong
+        exit(1);
 
     }
 
@@ -295,12 +304,12 @@ int start_pipe_processes(char ***m_pipe_command) {
             if (close(fd[1]) == -1 || errno)
                 return -1;
 
-            if (execvp(*(m_pipe_command)[0], *m_pipe_command) == -1 || errno)
-                return -1;
+            // Normally, execvp not pop RIP register from the stack
+            if (execvp(*m_pipe_command[0], *m_pipe_command) == -1 || errno)
+                perror(*m_pipe_command[0]);
 
-            //If the execvp failed and the return are not egal to -1,
-            //We return -1, because normally execvp exit after execute command 
-            return -1;
+            // Often when command are wrong
+            exit(1);
         
         }
 
