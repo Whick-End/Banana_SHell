@@ -3,10 +3,11 @@
 
 .DEFAULT_GOAL = compile
 
-compile:
-		echo "Compiling.."
-		$(CC) -Wall -Wextra -Werror Banana_shell.h Main.c Banana_shell.c Banana_loop.c Banana_shell_functions.c Banana_print_functions.c -o bsh
-		echo "Compile successfully"
+compile: main.c Banana_shell.c Banana_loop.c  Banana_shell_functions.c Banana_print_functions.c
+	echo "Compiling.."
+	gcc -Wall -Wextra -Werror Banana_shell.h Banana_shell.c Banana_loop.c Banana_shell_functions.c Banana_print_functions.c main.c -o bsh
+	echo "Compilation finished successfully"
+
 
 install: compile
 	sudo mv bsh /bin/bsh
