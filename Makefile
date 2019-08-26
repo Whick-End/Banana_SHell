@@ -1,17 +1,20 @@
 .SILENT:
-.PHONY: compile install uninstall line 
+.PHONY: bsh install uninstall line 
 
-.DEFAULT_GOAL = compile
+.DEFAULT_GOAL = bsh
 
-GREP_LINE = $(shell wc -l Banana_loop.c Banana_shell.c Banana_shell_functions.c Banana_shell.h Banana_print_functions.c Main.c | grep -E ".[0-9]+ total")
+EXEC = bsh
+CC = gcc
+SRC = $(wildcard *.c)
 
-compile: Main.c Banana_shell.c Banana_loop.c  Banana_shell_functions.c Banana_print_functions.c
+GREP_LINE = $(shell wc -l Banana_shell.h $(SRC) | grep -E ".[0-9]+ total")
+
+$(EXEC): Main.c Banana_shell.c Banana_loop.c Banana_shell_functions.c Banana_print_functions.c
 	echo "Compiling.."
-	gcc -Wall -Wextra -Werror Banana_shell.h Banana_shell.c Banana_loop.c Banana_shell_functions.c Banana_print_functions.c Main.c -o bsh
+	$(CC) -Wall -Wextra -Werror Banana_shell.h  $(SRC) -o $@
 	echo "Compilation finished successfully"
 
-
-install: compile
+install: $(EXEC)
 	sudo mv bsh /bin/bsh
 	echo "Installation Finished !"
 
