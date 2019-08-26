@@ -4,16 +4,16 @@
 .DEFAULT_GOAL = compile
 
 compile:
-	if [ -f "Banana_shell.h" ] && [ -f "a.c" ]																			\
-	&&  [ -f "Banana_shell.c" ] && [ -f "Banana_loop.c" ]																\
-	&& [ -f "Banana_shell_functions.c" ] && [ -f "Banana_print_functions.c" ];											\
-	then																												\
-		echo "Compiling..";																								\
-		$(CC) -Wall -Wextra -Werror Banana_shell.h Main.c Banana_shell.c Banana_loop.c									\
-		Banana_shell_functions.c Banana_print_functions.c -o bsh;														\
-		echo "Compile successfully";																					\
-	else																												\
-		echo "You're missing files, check the github: https://github.com/Cobraxo/Banana_SHell";							\
+	if [ -f "Banana_shell.h" ] && [ -f "a.c" ]\
+	&&  [ -f "Banana_shell.c" ] && [ -f "Banana_loop.c" ]\
+	&& [ -f "Banana_shell_functions.c" ] && [ -f "Banana_print_functions.c" ];\
+	then\
+		echo "Compiling..";\
+		$(CC) -Wall -Wextra -Werror Banana_shell.h Main.c Banana_shell.c Banana_loop.c\
+		Banana_shell_functions.c Banana_print_functions.c -o bsh;\
+		echo "Compile successfully";\
+	else\
+		echo "You're missing files, check the github: https://github.com/Cobraxo/Banana_SHell";\
 	fi
 
 install: compile
@@ -21,12 +21,12 @@ install: compile
 	echo "Installation Finished !"
 
 uninstall:
-	if [ -f "/bin/bsh" ];									\
-	then													\
-		echo "Removing...";									\
-		sudo rm -f /bin/bsh && echo "Remove successfully";	\
-	else													\
-		echo "Banana SHell is not installed";				\
+	if [ -f "/bin/bsh" ];\
+	then\
+		echo "Removing...";\
+		sudo rm -f /bin/bsh && echo "Remove successfully";\
+	else\
+		echo "Banana SHell is not installed";\
 	fi;
 
 line: line_out
