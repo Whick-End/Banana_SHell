@@ -220,14 +220,18 @@ int start_processes(char **m_args) {
     pid_t pid = fork();
 
     // If fork() failed
-    if (pid == -1 || errno)
+    if (pid == -1)
         return -1;
 
     // Child process
     if (pid == 0) {
 
+        // Patch to MacOS
+        // https://stackoverflow.com/questions/20295011/errno-set-in-child-process-after-fork-osx
+        errno = 0;
+
         // Normally, execvp not pop RIP register from the stack
-        if (execvp(m_args[0], m_args) == -1 || errno)
+        if (execvp(m_args[0], m_args) == -1)
             perror(m_args[0]);
 
         // Often when the command are wrong
@@ -277,6 +281,10 @@ int start_pipe_processes(char ***m_pipe_command) {
         // Child
         if (pid == 0) {
             
+            // Patch to MacOS
+            // https://stackoverflow.com/questions/20295011/errno-set-in-child-process-after-fork-osx
+            errno = 0;
+
             // We use just save_stdin_of_last_command, not the fd[0]
             if (close(fd[0]) == -1 || errno)
                 return -1;
