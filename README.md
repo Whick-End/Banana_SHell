@@ -1,5 +1,4 @@
 # Banana_SHell
-Banana SHell, is a friendly shell, cute, don't step on it ! ^^
 
   ![images/Banana_SHell_view_banana_command](/Images/Banana_SHell_view_banana_command.png)
 
