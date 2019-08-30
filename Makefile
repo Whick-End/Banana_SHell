@@ -14,6 +14,7 @@ $(EXEC): Dir Main Banana_shell Banana_loop Banana_shell_functions Banana_print_f
 
 	echo "Compiling.."
 	$(CC) $(FLAGS) -include Banana_shell.h $(OFILES) -o $@
+	#Create Binary Stripped, for also MacOS
 	strip $@
 	echo "Compilation finished successfully"
 
