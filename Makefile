@@ -12,7 +12,7 @@ GREP_LINE = $(shell wc -l Banana_shell.h $(CFILES) | grep -E ".[0-9]+ total")
 $(EXEC): Dir Main Banana_shell Banana_loop Banana_shell_functions Banana_print_functions
 
 	echo "Compiling.."
-	$(CC) -Wall -Wextra -Werror -include Banana_shell.h $(OFILES) -o $@
+	$(CC) -Wall -Wextra -Werror -s -include Banana_shell.h $(OFILES) -o $@
 	echo "Compilation finished successfully"
 
 Dir:
