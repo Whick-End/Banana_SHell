@@ -1,9 +1,7 @@
-.SILENT:
-
 EXEC = bsh
 
+.SILENT:
 .PHONY: $(EXEC) install uninstall line 
-
 .DEFAULT_GOAL = $(EXEC)
 
 CC = gcc
