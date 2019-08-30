@@ -1,10 +1,8 @@
 .SILENT:
 .PHONY: bsh install uninstall line 
+.DEFAULT_GOAL = bsh
 
 EXEC = bsh
-
-.DEFAULT_GOAL = $(EXEC)
-
 CC = gcc
 CFILES = $(wildcard *.c)
 OFILES = $(wildcard o ObjectFiles/*.o)
@@ -14,7 +12,7 @@ GREP_LINE = $(shell wc -l Banana_shell.h $(CFILES) | grep -E ".[0-9]+ total")
 $(EXEC): Dir Main Banana_shell Banana_loop Banana_shell_functions Banana_print_functions
 
 	echo "Compiling.."
-	$(CC) -Wall -Wextra -Werror Banana_shell.h $(OFILES) -o $@
+	$(CC) -Wall -Wextra -Werror -include Banana_shell.h $(OFILES) -o $@
 	echo "Compilation finished successfully"
 
 Dir:
