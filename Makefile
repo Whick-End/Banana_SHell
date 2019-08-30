@@ -4,6 +4,7 @@
 
 EXEC = bsh
 CC = gcc
+FLAGS = -Wall -Wextra -Werror -O3 -fPIC
 CFILES = $(wildcard *.c)
 OFILES = $(wildcard o ObjectFiles/*.o)
 
@@ -12,7 +13,8 @@ GREP_LINE = $(shell wc -l Banana_shell.h $(CFILES) | grep -E ".[0-9]+ total")
 $(EXEC): Dir Main Banana_shell Banana_loop Banana_shell_functions Banana_print_functions
 
 	echo "Compiling.."
-	$(CC) -Wall -Wextra -Werror -s -include Banana_shell.h $(OFILES) -o $@
+	$(CC) $(FLAGS) -include Banana_shell.h $(OFILES) -o $@
+	strip $@
 	echo "Compilation finished successfully"
 
 Dir:
@@ -36,8 +38,8 @@ Banana_print_functions:
 clean:
 	rm -f $(OFILES)
 
-install: $(EXEC)
-	sudo mv bsh /bin/bsh
+install: $(EXEC) clean
+	sudo mv bsh /usr/bin/bsh
 	echo "Installation Finished !"
 
 uninstall:
