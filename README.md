@@ -30,4 +30,4 @@ Banana SHell, is a friendly shell, cute, don't step on it ! ^^
   
 ## Diagram Of Codes
   
-  ![images/Banana_SHell_Diagram](/diagram/Banana_SHell_Diagram.jpg)
+  ![images/Banana_SHell_Diagram](/Diagram/Banana_SHell_Diagram.jpg)
