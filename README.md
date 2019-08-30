@@ -1,6 +1,6 @@
 # Banana_SHell
   
-  Compatible with distribution on **GNU Linux** and **MacOS**
+  Compatible with distributions on **GNU Linux** and **MacOS**
 
   ![images/Banana_SHell_view_banana_command](/Images/Banana_SHell_view_banana_command.png)
 
