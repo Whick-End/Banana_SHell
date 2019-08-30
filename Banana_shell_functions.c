@@ -275,7 +275,7 @@ int start_pipe_processes(char ***m_pipe_command) {
 
         pid = fork();
 
-        if (pid == -1 || errno)
+        if (pid == -1)
             return -1;
 
         // Child
