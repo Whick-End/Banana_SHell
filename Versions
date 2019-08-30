@@ -1,0 +1,2 @@
+1.2: This version makes compatible Banana SHell to MacOS, thanks to: 
+     https://stackoverflow.com/questions/20295011/errno-set-in-child-process-after-fork-osx
