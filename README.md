@@ -29,7 +29,7 @@
   * To clean ObjectFiles directory, type **make clean**
   * To count number of line the project contains, type **make line**
   
-  ### PS:
+  ## PS:
     * make line, was for show me how I reduce the code, because ***less is better !***
     * **ObjectFiles** directory, is **create by Makefile**
     
