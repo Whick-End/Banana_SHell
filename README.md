@@ -17,7 +17,7 @@
     * **cd** command, if you type just cd, you gonna home directory
     * **help** command, show you specific command, if you forgot it
     * **banana** command, show the Author (Me), date of the last update, and my github
-    * **version*** command, get the current version
+    * **version** command, get the current version
     
    ![images/Banana_SHell_view_famous_command](/Images/Banana_SHell_view_famous_command.png)
     
