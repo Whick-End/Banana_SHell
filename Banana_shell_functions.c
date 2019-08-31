@@ -16,15 +16,15 @@ int print_banana_shell(void) {
     // Get Hostname in /proc/sys/kernel/hostname
     status_hostname = gethostname(hostname, 2048);
 
-    if (status_hostname == -1 || errno)
-        return -1;
+    if (status_hostname == EOF || errno)
+        return EOF;
 
     // Get User
     uid = geteuid();
     pw = getpwuid(uid);
 
     if ((signed int)uid == -2 || !pw || errno)
-        return -1;
+        return EOF;
 
     // Get current directory
     current_directory = getcwd(NULL, 0);
@@ -33,10 +33,10 @@ int print_banana_shell(void) {
     home_directory = getHomeDirectory();
 
     if (!home_directory || errno)
-        return -1;
+        return EOF;
 
     if (!current_directory || errno)
-        return -1;
+        return EOF;
     
     // Print CLI and if the current directory is home directory of user, just print ~
     (void)fprintf(stdout ,"%s%s%s:%s%s %s%s%s /> ", YELLOW, hostname, RESET, YELLOW, pw->pw_name, GREEN, 
@@ -51,7 +51,7 @@ char *get_input(void) {
     size_t line_size = 0;
     char *line = NULL;
     
-    if (getline(&line, &line_size, stdin) == -1 || !line || errno)
+    if (getline(&line, &line_size, stdin) == EOF || !line || errno)
         return NULL;
 
     return line;
@@ -73,7 +73,7 @@ char **clear_array(char *m_line, char *m_delimitation) {
     if (!m_line || !m_delimitation)
         return NULL;
 
-    int i, buffer_size = 256;
+    int i, buffer_size = BUF_SIZE;
     char **array_of_tokens = (char **)calloc(buffer_size, sizeof(char *));
     char *token = NULL;
 
@@ -96,7 +96,7 @@ char **clear_array(char *m_line, char *m_delimitation) {
         // If the buffer_size if smaller than m_line, realloc
         if (buffer_size >= i) {
 
-            buffer_size += 256;
+            buffer_size += BUF_SIZE;
             array_of_tokens = (char **)realloc(array_of_tokens, sizeof(char *) * buffer_size);
 
             if (!array_of_tokens || errno)
@@ -141,14 +141,14 @@ int execute_cd_shell_command(char **m_args) {
     int status_chdir = 0;
 
     if (!m_args || !m_args[0])
-        return -1;
+        return EOF;
 
     else if (!m_args[1]) {
 
         status_chdir = chdir(getHomeDirectory());
 
-        if (status_chdir == -1 || errno)
-            return -1;
+        if (status_chdir == EOF || errno)
+            return EOF;
 
         return status_chdir;
 
@@ -156,8 +156,8 @@ int execute_cd_shell_command(char **m_args) {
 
     status_chdir = chdir(m_args[1]);
     
-    if (status_chdir == -1 || errno)
-        return -1;
+    if (status_chdir == EOF || errno)
+        return EOF;
     
     return status_chdir;
     
@@ -166,7 +166,7 @@ int execute_cd_shell_command(char **m_args) {
 int wait_parent_process(pid_t m_pid) {
 
     if (!m_pid)
-        return -1;
+        return EOF;
 
     pid_t wait_pid = 0;
     int status_pid = 0;
@@ -180,14 +180,14 @@ int wait_parent_process(pid_t m_pid) {
     * Or if child return normally
     * Or if child was kill by signal
     * Or if errno is set
-    * Return -1/  EOF
+    * Return -1/EOF
     * 
     * Else return 0
     * 
     ***/
     
     if (wait_pid != m_pid || !WIFEXITED(status_pid) || WIFSIGNALED(status_pid) || errno)
-        return -1;
+        return EOF;
 
     return 0;
 
@@ -197,7 +197,7 @@ int start_processes(char **m_args) {
 
     // If m_args is null
     if (!m_args || !m_args[0])
-        return -1;
+        return EOF;
 
     // If exit, quit the shell
     if (strcmp(m_args[0], "exit") == 0) {
@@ -223,8 +223,8 @@ int start_processes(char **m_args) {
     pid_t pid = fork();
 
     // If fork() failed
-    if (pid == -1)
-        return -1;
+    if (pid == EOF)
+        return EOF;
 
     // Child process
     if (pid == 0) {
@@ -234,7 +234,7 @@ int start_processes(char **m_args) {
         errno = 0;
 
         // Normally, execvp not pop RIP register from the stack
-        if (execvp(m_args[0], m_args) == -1)
+        if (execvp(m_args[0], m_args) == EOF)
             perror(m_args[0]);
 
         // Often when the command are wrong
@@ -250,7 +250,7 @@ int start_processes(char **m_args) {
 int start_pipe_processes(char ***m_pipe_command) {
 
     if (!m_pipe_command || !*m_pipe_command[0])
-      return -1;
+      return EOF;
 
     int save_stdin_of_last_command, fd[2] = {0};
     pid_t pid;
@@ -273,13 +273,13 @@ int start_pipe_processes(char ***m_pipe_command) {
 
     for (save_stdin_of_last_command = 0; *m_pipe_command != NULL; m_pipe_command++) {
 
-        if (pipe(fd) == -1 || errno)
-            return -1;
+        if (pipe(fd) == EOF || errno)
+            return EOF;
 
         pid = fork();
 
-        if (pid == -1)
-            return -1;
+        if (pid == EOF)
+            return EOF;
 
         // Child
         if (pid == 0) {
@@ -289,17 +289,17 @@ int start_pipe_processes(char ***m_pipe_command) {
             errno = 0;
 
             // We use just save_stdin_of_last_command, not the fd[0]
-            if (close(fd[0]) == -1 || errno)
-                return -1;
+            if (close(fd[0]) == EOF || errno)
+                return EOF;
 
-            if (dup2(save_stdin_of_last_command, STDIN_FILENO) == -1 || errno)
-                return -1;
+            if (dup2(save_stdin_of_last_command, STDIN_FILENO) == EOF || errno)
+                return EOF;
             
             // If it's the last command, keep stdout
             if (*(m_pipe_command + 1) != NULL) {
 
-                if (dup2(fd[1], STDOUT_FILENO) == -1 || errno)
-                    return -1;
+                if (dup2(fd[1], STDOUT_FILENO) == EOF || errno)
+                    return EOF;
             
             }
 
@@ -312,11 +312,11 @@ int start_pipe_processes(char ***m_pipe_command) {
             * 
             ***/
             
-            if (close(fd[1]) == -1 || errno)
-                return -1;
+            if (close(fd[1]) == EOF || errno)
+                return EOF;
 
             // Normally, execvp not pop RIP register from the stack
-            if (execvp(*m_pipe_command[0], *m_pipe_command) == -1 || errno)
+            if (execvp(*m_pipe_command[0], *m_pipe_command) == EOF || errno)
                 perror(*m_pipe_command[0]);
 
             // Often when command are wrong
@@ -328,8 +328,8 @@ int start_pipe_processes(char ***m_pipe_command) {
         wait_parent_process(pid);
 
         // We use just stdout, stdin and fd[0], not the fd[1]
-        if (close(fd[1]) == -1 || errno)
-            return -1;
+        if (close(fd[1]) == EOF || errno)
+            return EOF;
 
         // Save the stdout of the last command
         // last stdout = new stdin
