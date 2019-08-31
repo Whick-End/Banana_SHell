@@ -24,7 +24,7 @@ int banana_shell(void) {
         status_banana_loop = banana_loop();
 
         // If any error
-        if (status_banana_loop == -1 || errno)
+        if (status_banana_loop == EOF || errno)
             perror("");
 
     }
