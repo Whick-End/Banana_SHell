@@ -30,7 +30,7 @@
   * To count number of line the project contains, type **make line**
   
   **PS**:\n
-    make line, was for show me how I reduce the code, because ***less is better !***\n
+    make line, was for show me how I reduce the code, because ***less is better !***<br />
     ObjectFiles directory, is create by Makefile\n
     
 ## Diagram Of Codes
