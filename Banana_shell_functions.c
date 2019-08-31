@@ -216,6 +216,9 @@ int start_processes(char **m_args) {
     else if (strcmp(m_args[0], "banana") == 0)
         return print_banana();
 
+    else if (strcmp(m_args[0], "version") == 0)
+        return print_version();
+
     // Else execute command
     pid_t pid = fork();
 
