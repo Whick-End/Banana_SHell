@@ -71,4 +71,7 @@ int print_banana(void);
 // Print the help, if the command help is enter
 int print_banana_help(void);
 
+// Print the current version
+int print_version(void);
+
 #endif
