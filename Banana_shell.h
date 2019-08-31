@@ -19,6 +19,7 @@
 
 #define TRUE 1
 #define FALSE 0
+#define BUF_SIZE 256
 
 // Colors
 #define DARK_BLUE "\e[38;5;45m"
