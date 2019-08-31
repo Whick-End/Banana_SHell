@@ -17,6 +17,7 @@
     * **cd** command, if you type just cd, you gonna home directory
     * **help** command, show you specific command, if you forgot it
     * **banana** command, show the Author (Me), date of the last update, and my github
+    * **version*** command, get the current version
     
    ![images/Banana_SHell_view_famous_command](/Images/Banana_SHell_view_famous_command.png)
     
@@ -25,6 +26,7 @@
   * To install the Banana SHell, on your computer, type **make install**
   * To uninstall the Banana SHell, type **make uninstall**
   * To compile Banana SHell, type **make**
+  * To clean ObjectFiles directory, type **make clean**
   * To count number of line the project contains, type **make line**
   
   **PS**: make line, was for show me how I reduce the code, because ***less is better !***
