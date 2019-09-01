@@ -6,8 +6,8 @@ EXEC = bsh
 CC = gcc
 FLAGS = -Wall -Wextra -Werror -O3 -fPIC
 CFILES = $(wildcard *.c)
-OFILES = $(wildcard o ObjectFiles/*.o)
-
+ODIR = ObjectFiles
+OFILES = $(wildcard o $(ODIR)/*.o)
 GREP_LINE = $(shell wc -l Banana_shell.h $(CFILES) | grep -E ".[0-9]+ total")
 
 $(EXEC): Dir Main Banana_shell Banana_loop Banana_shell_functions Banana_print_functions
@@ -19,25 +19,25 @@ $(EXEC): Dir Main Banana_shell Banana_loop Banana_shell_functions Banana_print_f
 	echo "Compilation finished successfully"
 
 Dir:
-	[ ! -d "ObjectFiles/" ] && mkdir ObjectFiles || true
+	[ ! -d "$(ODIR)" ] && mkdir $(ODIR) || true
 
 Main:
-	$(CC) -c Main.c -o ObjectFiles/Main.o
+	$(CC) -c Main.c -o $(ODIR)/Main.o
 
 Banana_shell:
-	$(CC) -c Banana_shell.c -o ObjectFiles/Banana_shell.o
+	$(CC) -c Banana_shell.c -o $(ODIR)/Banana_shell.o
 
 Banana_loop:
-	$(CC) -c Banana_loop.c -o ObjectFiles/Banana_loop.o
+	$(CC) -c Banana_loop.c -o $(ODIR)/Banana_loop.o
 
 Banana_shell_functions:
-	$(CC) -c Banana_shell_functions.c -o ObjectFiles/Banana_shell_functions.o
+	$(CC) -c Banana_shell_functions.c -o $(ODIR)/Banana_shell_functions.o
 
 Banana_print_functions:
-	$(CC) -c Banana_print_functions.c -o ObjectFiles/Banana_print_functions.o
+	$(CC) -c Banana_print_functions.c -o $(ODIR)/Banana_print_functions.o
 
 clean:
-	rm -rf ObjectFiles/
+	rm -rf $(ODIR)
 
 install: $(EXEC) clean
 	sudo mv bsh /usr/bin/bsh
