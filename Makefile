@@ -37,7 +37,7 @@ Banana_print_functions:
 	$(CC) -c Banana_print_functions.c -o ObjectFiles/Banana_print_functions.o
 
 clean:
-	rm -f $(OFILES)
+	rm -rf ObjectFiles/
 
 install: $(EXEC) clean
 	sudo mv bsh /usr/bin/bsh
