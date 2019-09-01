@@ -64,7 +64,7 @@ int print_banana_help(void) {
      /**********/*     *****/(#\n\
           ..            ******//(\n\
                          *****/\n\
-                           **/(%s\n\
+                           **/(%s\n\n\n\
     \n",
 
     LIGHT_YELLOW, YELLOW, LIGHT_YELLOW, RESET,
