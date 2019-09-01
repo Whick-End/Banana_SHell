@@ -52,64 +52,64 @@ int banana_loop(void) {
                 // Execute command(s)
 
                 // If any pipe(s)
-                if (strchr(line, '|')) {
-                    
-                    /***
-                    * 
-                    * If User enter pipe,
-                    * pipe_command is egal to all the commands without pipe and any delimitations
-                    * Each command are separate by index, for example:
-                    * pipe_command[0][0] = "ls"
-                    * pipe_command[0][1] = "-l"
-                    * 
-                    * pipe_command[1][0] = "wc"
-                    *
-                    ***/
+            if (strchr(line, '|')) {
+                
+                /***
+                * 
+                * If User enter pipe,
+                * pipe_command is egal to all the commands without pipe and any delimitations
+                * Each command are separate by index, for example:
+                * pipe_command[0][0] = "ls"
+                * pipe_command[0][1] = "-l"
+                * 
+                * pipe_command[1][0] = "wc"
+                *
+                ***/
 
-                    char ***pipe_command = (char ***)calloc(pipe_command_size, sizeof(char *));
-                    
-                    if (!pipe_command || errno)
-                        return EOF;
+                char ***pipe_command = (char ***)calloc(pipe_command_size, sizeof(char *));
+                
+                if (!pipe_command || errno)
+                    return EOF;
 
-                    // Separate each command, without '|'
-                    line_2_commands = clear_array(line, "|");
+                // Separate each command, without '|'
+                line_2_commands = clear_array(line, "|");
 
-                    if (!line_2_commands || errno)
-                        return EOF;
+                if (!line_2_commands || errno)
+                    return EOF;
 
-                    for (i = 0; line_2_commands[i] != NULL; i++) {
+                for (i = 0; line_2_commands[i] != NULL; i++) {
 
-                        // If pipe_command are smaller than the input user, realloc pipe_command
-                        if (i <= pipe_command_size) {
+                    // If pipe_command are smaller than the input user, realloc pipe_command
+                    if (i <= pipe_command_size) {
 
-                            pipe_command_size += BUF_SIZE;
-                            pipe_command = (char ***)realloc(pipe_command, sizeof(char *) * pipe_command_size);
+                        pipe_command_size += BUF_SIZE;
+                        pipe_command = (char ***)realloc(pipe_command, sizeof(char *) * pipe_command_size);
 
-                            if (!pipe_command || errno)
-                                return EOF;
-
-                        }
-
-                        // Each command have their own index
-                        pipe_command[i] = clear_array(line_2_commands[i], DELIMT);
-
-                        if (!pipe_command[i] || errno)
+                        if (!pipe_command || errno)
                             return EOF;
 
                     }
 
-                    // Set the Null Byte character in the end of the array of commands
-                    pipe_command[i] = NULL;
-                    
-                    if (start_pipe_processes(pipe_command) == EOF || errno)
+                    // Each command have their own index
+                    pipe_command[i] = clear_array(line_2_commands[i], DELIMT);
+
+                    if (!pipe_command[i] || errno)
                         return EOF;
-                    
-                    // Clear the heap
-                    for (i = 0; pipe_command[i] != NULL; i++)
-                        free(pipe_command[i]);
-                    
-                    //Finish by clear the pipe_command
-                    free(pipe_command);
+
+                }
+
+                // Set the Null Byte character in the end of the array of commands
+                pipe_command[i] = NULL;
+                
+                if (start_pipe_processes(pipe_command) == EOF || errno)
+                    return EOF;
+                
+                // Clear the heap
+                for (i = 0; pipe_command[i] != NULL; i++)
+                    free(pipe_command[i]);
+                
+                //Finish by clear the pipe_command
+                free(pipe_command);
                     
                 }
 
