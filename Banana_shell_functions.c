@@ -163,6 +163,79 @@ int execute_cd_shell_command(char **m_args) {
     
 }
 
+int replace_env_variable(char **m_args) {
+
+    if (!m_args)
+        return EOF;
+
+    char *env_var = NULL;
+    int i;
+
+    for (i = 0; m_args[i] != NULL; i++) {
+
+        if (m_args[i][0] == '$') {
+
+            env_var = getenv(m_args[i]+1);
+            
+            // If getenv failed or the NAME is wrong
+            if (!env_var || errno) {
+                
+                m_args[i][0] = ' ';
+                m_args[i][1] = '\0';
+                return 0;
+
+            }
+
+            m_args[i] = env_var;
+
+        }
+
+    }
+
+    return 0;
+
+}
+
+int export(char **m_export_command) {
+
+    if (!m_export_command)
+        return EOF;
+
+    // If threre aren't name with export command
+    if (!m_export_command[1])
+        return 0;
+
+    // Separate the name and the value
+    char **clear_name_value = clear_array(m_export_command[1], "=");
+
+    if (!clear_name_value || errno)
+        return EOF;
+
+    // clear_name_value[0] = Name, clear_name_value[1] = Value
+    if (setenv(clear_name_value[0], clear_name_value[1], 1) == EOF || errno)
+        return EOF;
+    
+    return 0;
+
+}
+
+int unset(char **m_unset_command) {
+
+    if (!m_unset_command)
+        return EOF;
+
+    // If there aren't name with unset command
+    if (!m_unset_command[1])
+        return 0;
+
+    // Call unsetenv with the name of the variable
+    if (unsetenv(m_unset_command[1]) == EOF || errno)
+        return EOF;
+
+    return 0;
+
+}
+
 int wait_parent_process(pid_t m_pid) {
 
     if (!m_pid)
@@ -209,6 +282,12 @@ int start_processes(char **m_args) {
 
     else if (strcmp(m_args[0], "cd") == 0)
         return execute_cd_shell_command(m_args);
+
+    else if (strcmp(m_args[0], "export") == 0)
+        return export(m_args);
+
+    else if (strcmp(m_args[0], "unset") == 0)
+        return unset(m_args);
 
     else if (strcmp(m_args[0], "help") == 0)
         return print_banana_help();
