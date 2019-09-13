@@ -23,7 +23,7 @@ int print_banana(void) {
         ###&&      %s((@(@#\n\
                    (##(#@              %sBanana Shell%s\n\
                    ((#(#@                 %s-Author: %sCobraxo%s\n\
-                   ((#(@#                 %s-Date: %s08/30/2019%s\n\
+                   ((#(@#                 %s-Date: %s09/13/2019%s\n\
                   #(##((##.               %s-Github: %shttps://github.com/Cobraxo/%s\n\
                   ##@(##(#                %sHave a fun ! ^^%s\n\
                   #####(@\n\
