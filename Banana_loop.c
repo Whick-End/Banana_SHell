@@ -17,6 +17,9 @@ int banana_loop(void) {
     if (errno)
         return EOF;
 
+    if (setenv("SHELL", "Banana SHEll", 1) == EOF || errno)
+        return EOF;
+
     // By default
     shell_continue = TRUE;
 
