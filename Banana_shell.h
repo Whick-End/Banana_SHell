@@ -60,6 +60,15 @@ int wait_parent_process(pid_t m_pid);
 // Change Directory
 int execute_cd_shell_command(char **m_args);
 
+// Search environnement variable, and replace it by their value
+int replace_env_variable(char **m_args);
+
+// Export environnement variable
+int export(char **m_export_command);
+
+// Delete environnement variable
+int unset(char **m_unset_command);
+
 // Get the Home Directory of User
 char *getHomeDirectory(void);
 
