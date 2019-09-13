@@ -8,7 +8,7 @@ int banana_loop(void) {
 
     int i;
     long int pipe_command_size = BUF_SIZE;
-    char **line_clean = NULL, **line_2_commands = NULL;
+    char **check_env = NULL, **line_clean = NULL, **line_2_commands = NULL;
     char *line = NULL;
 
     // Catch Control-C
@@ -90,8 +90,15 @@ int banana_loop(void) {
 
                     }
 
+
+                    check_env = clear_array(line_2_commands[i], DELIMT);
+
+                    // Check if environnement variable
+                    if (replace_env_variable(check_env) == EOF || errno)
+                        return EOF;
+
                     // Each command have their own index
-                    pipe_command[i] = clear_array(line_2_commands[i], DELIMT);
+                    pipe_command[i] = check_env;
 
                     if (!pipe_command[i] || errno)
                         return EOF;
@@ -119,6 +126,9 @@ int banana_loop(void) {
                     // Take off the delimitation, like spaces
                     line_clean = clear_array(line, DELIMT);                   
                     
+                    if (replace_env_variable(line_clean) == EOF || errno)
+                        return EOF;
+
                     if (!line_clean || errno)
                         return EOF;
 
