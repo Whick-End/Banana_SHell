@@ -97,7 +97,7 @@ int banana_loop(void) {
                     check_env = clear_array(line_2_commands[i], DELIMT);
 
                     // Check if environnement variable
-                    if (replace_env_variable(check_env) == EOF || errno)
+                    if (replace_env_var(check_env) == EOF || errno)
                         return EOF;
 
                     // Each command have their own index
@@ -129,7 +129,7 @@ int banana_loop(void) {
                     // Take off the delimitation, like spaces
                     line_clean = clear_array(line, DELIMT);                   
                     
-                    if (replace_env_variable(line_clean) == EOF || errno)
+                    if (replace_env_var(line_clean) == EOF || errno)
                         return EOF;
 
                     if (!line_clean || errno)
