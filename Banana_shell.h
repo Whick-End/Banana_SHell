@@ -61,7 +61,7 @@ int wait_parent_process(pid_t m_pid);
 int execute_cd_shell_command(char **m_args);
 
 // Search environnement variable, and replace it by their value
-int replace_env_variable(char **m_args);
+int replace_env_var(char **m_args);
 
 // Export environnement variable
 int export(char **m_export_command);
