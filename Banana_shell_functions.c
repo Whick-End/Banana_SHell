@@ -163,7 +163,7 @@ int execute_cd_shell_command(char **m_args) {
     
 }
 
-int replace_env_variable(char **m_args) {
+int replace_env_var(char **m_args) {
 
     if (!m_args)
         return EOF;
