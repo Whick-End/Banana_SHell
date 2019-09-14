@@ -35,4 +35,4 @@
     
 ## Diagram Of Codes
   
-  ![images/Banana_SHell_Diagram](/Diagram/Banana_SHell_Diagram.jpg)
+  ![images/Banana_SHell_Diagram](/Diagram/Banana_Shell_Diagram.jpg)
