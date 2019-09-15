@@ -9,7 +9,7 @@ int banana_loop(void) {
     int i;
     long int pipe_command_size = BUF_SIZE;
     char **check_env = NULL, **line_clean = NULL, **line_2_commands = NULL;
-    char *line = NULL;
+    char *line = NULL, *prompt = NULL;
 
     // Catch Control-C
     (void)signal(SIGINT, handler);
@@ -27,18 +27,18 @@ int banana_loop(void) {
     while (shell_continue) {
         
         // Print the shell interface
-        if (print_banana_shell() == EOF || errno)
+        if (!(prompt = get_banana_shell()) || errno)
             return EOF;
 
         // Get user input
-        line = get_input();
+        line = get_input(prompt);
         
         // If get_input failed
         if (errno)
             return EOF;
 
         // If Control-D is pressed
-        if (feof(stdin)) {
+        if (!line) {
 
             (void)putc('\n', stdout);
             shell_continue = FALSE;
@@ -144,6 +144,8 @@ int banana_loop(void) {
 
         }
 
+        // Delete prompt
+        free(prompt);
         // Delete the user input
         free(line);
 
