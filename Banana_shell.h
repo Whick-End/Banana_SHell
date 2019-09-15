@@ -1,6 +1,8 @@
 #ifndef BANANA_SHELL
 #define BANANA_SHELL
 
+#include <readline/readline.h>
+#include <readline/history.h>
 #include <sys/types.h>
 #include <string.h>
 #include <signal.h>
@@ -20,6 +22,7 @@
 #define TRUE 1
 #define FALSE 0
 #define BUF_SIZE 256
+#define HOST_BUF 2048
 
 // Colors
 #define DARK_BLUE "\e[38;5;45m"
@@ -39,11 +42,11 @@ int banana_shell(void);
 // Loop of Banana Shell
 int banana_loop(void);
 
-// Print the Banana Shell
-int print_banana_shell(void);
+// Get the Banana Shell
+char *get_banana_shell(void);
 
-// Get line and save it
-char *get_input(void); 
+// Print Banana SHell and get user input
+char *get_input(char *m_cli);
 
 // Clear array for execution
 char **clear_array(char *m_line, char *m_delimitation);
