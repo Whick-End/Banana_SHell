@@ -4,27 +4,29 @@
 // Extern variable, to know if the shell continue
 char shell_continue;
 
-int print_banana_shell(void) {
+char *get_banana_shell(void) {
 
     int status_hostname = 0;
+    long int size_cli = 0;
     char *current_directory = NULL, *home_directory = NULL;
-    char hostname[2048];
+    char *username = NULL, *banana_shell = NULL;
+    char hostname[HOST_BUF];
 
     passwd *pw = NULL;
     uid_t uid = -2;
 
     // Get Hostname in /proc/sys/kernel/hostname
-    status_hostname = gethostname(hostname, 2048);
+    status_hostname = gethostname(hostname, HOST_BUF);
 
     if (status_hostname == EOF || errno)
-        return EOF;
+        return NULL;
 
     // Get User
     uid = geteuid();
     pw = getpwuid(uid);
 
     if ((signed int)uid == -2 || !pw || errno)
-        return EOF;
+        return NULL;
 
     // Get current directory
     current_directory = getcwd(NULL, 0);
@@ -32,26 +34,51 @@ int print_banana_shell(void) {
     // Get home directory
     home_directory = getHomeDirectory();
 
+    // Get username
+    username = pw->pw_name;
+
     if (!home_directory || errno)
-        return EOF;
+        return NULL;
 
     if (!current_directory || errno)
-        return EOF;
+        return NULL;
     
-    // Print CLI and if the current directory is home directory of user, just print ~
-    (void)fprintf(stdout ,"%s%s%s:%s%s %s%s%s /> ", YELLOW, hostname, RESET, YELLOW, pw->pw_name, GREEN, 
-    (strcmp(current_directory, home_directory) == 0) ? "~" : current_directory, RESET);
+    if (!username || errno)
+        return NULL;
+
+    // If current directory is home directory of user, just print ~
+    if (strcmp(current_directory, home_directory) == 0)
+        current_directory = "~";
+
+    // Calculate number of sizeof(char)
+    size_cli += strlen(YELLOW) * 2;
+    size_cli += strlen(hostname);
+    size_cli += strlen(RESET) * 2;
+    size_cli += strlen(username);
+    size_cli += strlen(GREEN);
+    size_cli += strlen(current_directory);
     
-    return 0;
+    // For litte space
+    size_cli += 50;
+
+    banana_shell = (char *)calloc(sizeof(char), size_cli);
+
+    if (!banana_shell || errno)
+        return NULL;
+
+    // Save CLI
+    (void)sprintf(banana_shell ,"%s%s%s:%s%s %s%s%s /> ", YELLOW, hostname, RESET, YELLOW, username, GREEN, current_directory, RESET);
+
+    return banana_shell;
 
 }
 
-char *get_input(void) {
-    
-    size_t line_size = 0;
+char *get_input(char *m_banana_shell) {
+
     char *line = NULL;
-    
-    if (getline(&line, &line_size, stdin) == EOF || !line || errno)
+
+    // Print prompt (m_banana_shell), and get user input into line
+    if (!(line = readline(m_banana_shell)) || errno)
         return NULL;
 
     return line;
@@ -426,7 +453,12 @@ void handler(int m_number) {
     //Just print newline and print the shell interface
     (void)m_number;
     (void)putc('\n', stdout);
-    (void)print_banana_shell();
+    // Print prompt
+    rl_on_new_line();
+    // Clear line
+    rl_replace_line("", 0);
+    // Start modifications
+    rl_redisplay();
     (void)fflush(stdout);
     (void)signal(SIGINT, handler);
 
