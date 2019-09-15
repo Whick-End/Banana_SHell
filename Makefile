@@ -13,7 +13,7 @@ GREP_LINE = $(shell wc -l Banana_shell.h $(CFILES) | grep -E ".[0-9]+ total")
 $(EXEC): Dir Main Banana_shell Banana_loop Banana_shell_functions Banana_print_functions
 
 	echo "Compiling.."
-	$(CC) $(FLAGS) -include Banana_shell.h $(OFILES) -o $@
+	$(CC) $(FLAGS) -include Banana_shell.h $(OFILES) -lreadline -o $@
 	#Create Binary Stripped, for also MacOS
 	strip $@
 	echo "Compilation finished successfully"
