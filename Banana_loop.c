@@ -49,8 +49,12 @@ int banana_loop(void) {
         else {
 
             // If the input is "enter" continue without starting processes commands, ...
-            if (*line == '\n')
+            if (*line == 0)
                 return 1;
+
+            // Save command
+            add_history(line);
+
 
                 // Execute command(s)
 
