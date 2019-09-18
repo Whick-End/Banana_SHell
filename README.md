@@ -37,6 +37,9 @@
   * make line, was for show me how I reduce the code, because ***less is better !***
   * **ObjectFiles** directory, is **create by Makefile**
     
+## HELP
+  If you have any errors with readline library, try this: sudo apt-get ```install libreadline6 libreadline6-dev```
+    
 ## Diagram Of Codes
   
   ![images/Banana_SHell_Diagram](/Diagram/Banana_Shell_Diagram.jpg)
