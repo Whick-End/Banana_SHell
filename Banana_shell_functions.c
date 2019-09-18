@@ -455,8 +455,10 @@ void handler(int m_number) {
     (void)putc('\n', stdout);
     // Print prompt
     rl_on_new_line();
-    // Clear line
-    rl_replace_line("", 0);
+    #ifndef __APPLE__
+        // Clear line
+        rl_replace_line("", 0);
+    #endif
     // Start modifications
     rl_redisplay();
     (void)fflush(stdout);
