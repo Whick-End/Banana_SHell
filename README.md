@@ -12,6 +12,8 @@
   
   * Also we support all of Controls, like **Control-R**, etc
   
+  * There is **auto completion**
+  
   * You can do pipe, like that **ls | wc**, or what you want
   
   * Environnement variable can be change, create with **export**, **echo**, or delete with **unset**
