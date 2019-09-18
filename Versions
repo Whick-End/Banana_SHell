@@ -2,3 +2,8 @@
      https://stackoverflow.com/questions/20295011/errno-set-in-child-process-after-fork-osx
 
 1.3: Add environnement variable, you can echo $VARIABLE, export VARIABLE=10, and unset VARIABLE !
+
+2.0: Add Control L, others updates about shell interface, such as now you can navigate in the input, ...
+
+2.4: Fix bug (readline colors and newline  bug), thanks to:
+     https://stackoverflow.com/questions/9468435/how-to-fix-column-calculation-in-python-readline-if-using-color-prompt
