@@ -10,7 +10,7 @@
   
   * He support also **Ctrl-C**, and **Ctrl-D** to exit the shell
   
-  * Also we support all of Control, like **Control-R**, etc
+  * Also we support all of Controls, like **Control-R**, etc
   
   * You can do pipe, like that **ls | wc**, or what you want
   
