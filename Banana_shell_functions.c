@@ -67,7 +67,7 @@ char *get_banana_shell(void) {
         return NULL;
 
     // Save CLI
-    (void)sprintf(banana_shell ,"%s%s%s:%s%s %s%s%s /> ", YELLOW, hostname, RESET, YELLOW, username, GREEN, current_directory, RESET);
+    (void)sprintf(banana_shell ,"%s%s%s:%s%s %s%s%s /> ", RL_YELLOW, hostname, RL_RESET, RL_YELLOW, username, RL_GREEN, current_directory, RL_RESET);
 
     return banana_shell;
 
