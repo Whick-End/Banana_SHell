@@ -14,7 +14,7 @@
   
   * You can do pipe, like that **ls | wc**, or what you want
   
-  * Environnement variable can be change, create, or delete
+  * Environnement variable can be change, create with **export**, echo, or delete with **unset**
   
   * Specific commands, are **help** and **banana**
     * **exit** command, to exit the shell
