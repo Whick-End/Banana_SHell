@@ -10,7 +10,11 @@
   
   * He support also **Ctrl-C**, and **Ctrl-D** to exit the shell
   
+  * Also we support all of Control, like **Control-R**, etc
+  
   * You can do pipe, like that **ls | wc**, or what you want
+  
+  * Environnement variable can be change, create, or delete
   
   * Specific commands, are **help** and **banana**
     * **exit** command, to exit the shell
