@@ -38,7 +38,7 @@
   * **ObjectFiles** directory, is **create by Makefile**
     
 ## HELP
-  If you have any errors with readline library, try this: sudo apt-get ```install libreadline6 libreadline6-dev```
+  If you have any errors with readline library, try this: sudo apt-get ```sudo apt-get install libreadline6 libreadline6-dev```
     
 ## Diagram Of Codes
   
