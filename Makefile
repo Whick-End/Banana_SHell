@@ -9,6 +9,7 @@ CFILES = $(wildcard *.c)
 ODIR = ObjectFiles
 OFILES = $(wildcard o $(ODIR)/*.o)
 GREP_LINE = $(shell wc -l Banana_shell.h $(CFILES) | grep -E ".[0-9]+ total")
+DIR = $(shell pwd)
 
 $(EXEC): Dir Main Banana_shell Banana_loop Banana_shell_functions Banana_print_functions
 
@@ -51,6 +52,11 @@ uninstall:
 	else\
 		echo "Banana SHell is not installed";\
 	fi;
+
+update:
+	git clone https://github.com/Cobraxo/Banana_SHell
+	cd Banana_SHell; make install
+	cd ../..; rm -rf $(DIR)
 
 line: 
 	echo "Banana SHell contains:\n$(GREP_LINE) lines !"
