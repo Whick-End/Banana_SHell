@@ -23,7 +23,7 @@ int print_banana(void) {
         ###&&      %s((@(@#\n\
                    (##(#@              %sBanana Shell%s\n\
                    ((#(#@                 %s-Author: %sCobraxo%s\n\
-                   ((#(@#                 %s-Date: %s09/13/2019%s\n\
+                   ((#(@#                 %s-Date: %s09/25/2019%s\n\
                   #(##((##.               %s-Github: %shttps://github.com/Cobraxo/%s\n\
                   ##@(##(#                %sHave a fun ! ^^%s\n\
                   #####(@\n\
@@ -49,7 +49,7 @@ int print_banana_help(void) {
                       %s(@\n\
                       (#\n\
                       /#(\n\
-                    ***/##/       %sBanna Shell Command%s\n\
+                    ***/##/       %sBanana Shell Command%s\n\
                    /***/(##         %s-exit    %s// To exit the shell%s\n\
                    ****/(##(        %s-help    %s// To get help like that%s\n\
                    ****/(###        %s-banana  %s// To see the Author and his github%s\n\
