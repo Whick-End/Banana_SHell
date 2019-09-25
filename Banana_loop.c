@@ -8,7 +8,7 @@ int banana_loop(void) {
 
     int i;
     long int pipe_command_size = BUF_SIZE;
-    char **check_env = NULL, **line_clean = NULL, **line_2_commands = NULL;
+    char **check_env = NULL, **line_clean = NULL;
     char *line = NULL, *prompt = NULL;
 
     // Catch Control-C
@@ -79,12 +79,12 @@ int banana_loop(void) {
                     return EOF;
 
                 // Separate each command, without '|'
-                line_2_commands = clear_array(line, "|");
+                line_clean = clear_array(line, "|");
 
-                if (!line_2_commands || errno)
+                if (!line_clean || errno)
                     return EOF;
 
-                for (i = 0; line_2_commands[i] != NULL; i++) {
+                for (i = 0; line_clean[i] != NULL; i++) {
 
                     // If pipe_command are smaller than the input user, realloc pipe_command
                     if (i <= pipe_command_size) {
@@ -98,7 +98,7 @@ int banana_loop(void) {
                     }
 
 
-                    check_env = clear_array(line_2_commands[i], DELIMT);
+                    check_env = clear_array(line_clean[i], DELIMT);
 
                     // Check if environnement variable
                     if (replace_env_var(check_env) == EOF || errno)
