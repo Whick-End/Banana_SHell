@@ -6,15 +6,12 @@ char shell_continue;
 
 char *get_banana_shell(void) {
 
+    // Declare and initialize all variables
     int status_hostname = 0, i = 0;
-    long int size_cli = 0;
-    long int  length_dir = DIR_BUF, length_home = 0;
+    long int size_cli = 0, length_home = 0;
     char *current_directory = NULL, *home_directory = NULL;
     char *username = NULL, *banana_shell = NULL;
     char hostname[HOST_BUF];
-
-    // Alloc directory, to avoid overflow
-    char *directory = (char *)calloc(length_dir, sizeof(char));
 
     passwd *pw = NULL;
     uid_t uid = -2;
@@ -51,77 +48,29 @@ char *get_banana_shell(void) {
         return NULL;
 
     // If current directory is home directory of user, just print ~
-    if (strcmp(current_directory, home_directory) == 0)
-        directory[0] = '~';
+    if (strcmp(current_directory, home_directory) == 0) {
+
+        current_directory[0] = '~';
+        current_directory[1] = '\0';
+
+    }
 
     // If there are home_directory in current_directory
     else if (strstr(current_directory, home_directory)) {
 
-        // Replace home_directory by ~/
-        directory[0] = '~';
-        directory[1] = '/';
-
-        // Get length of home directory, to bypass it
+        // Get length of home directory
         length_home = strlen(home_directory);
+
+        // Delete home directory, and save space to ~ character
+        current_directory += length_home - 1;
+
+        // Replace home_directory by ~
+        current_directory[0] = '~';
 
         if (!length_home || errno)
             return NULL;
 
-        // If length_home is grander than length_dir
-        while (length_home >= length_dir) {
-            
-            // Increase length_dir
-            length_dir += DIR_BUF;
-            directory = (char *)realloc(directory, sizeof(char) * length_dir);
-
-            if (!directory || errno)
-                return NULL;
-
-        }
-
-         // i = 2, because up we set directory[0] and directory[1]
-        for (i = 2; current_directory[i] != '\0' && length_home <= DIR_BUF; i++) {
-
-            length_home++;
-
-            // Avoid overflow
-            if (length_home >= length_dir) {
-
-                length_dir += DIR_BUF;
-                directory = (char *)realloc(directory, sizeof(char) * length_dir);
-
-                if (!directory || errno)
-                    return NULL;
-
-            }
-
-            // With length_home, we can bypass home directory and just put ~/
-            directory[i] = current_directory[length_home];
-
-        }
-
-
     }
-
-    // If there are not home_directory in the current_directory
-    else {
-        
-        // If length of current_directory is grander than length_dir
-        while (strlen(current_directory) >= length_dir) {
-            
-            // Increase size of directory
-            length_dir += DIR_BUF;
-            directory = (char *)realloc(directory, sizeof(char) * length_dir);
-
-            if (!directory || errno)
-                return NULL;
-
-        }
-
-        strncpy(directory, current_directory, length_dir);
-
-    }
-
 
     // Calculate number of sizeof(char)
     size_cli += strlen(YELLOW) * 2;
@@ -140,9 +89,7 @@ char *get_banana_shell(void) {
         return NULL;
 
     // Save CLI
-    (void)sprintf(banana_shell ,"%s%s%s:%s%s %s%s%s /> ", RL_YELLOW, hostname, RL_RESET, RL_YELLOW, username, RL_GREEN, directory, RL_RESET);
-
-    free(directory);
+    (void)sprintf(banana_shell ,"%s%s%s:%s%s %s%s%s /> ", RL_YELLOW, hostname, RL_RESET, RL_YELLOW, username, RL_GREEN, current_directory, RL_RESET);
 
     return banana_shell;
 
