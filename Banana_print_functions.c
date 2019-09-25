@@ -77,7 +77,7 @@ int print_banana_help(void) {
 
 int print_version(void) {
 
-    puts("Banana SHell 2.4");
+    puts("Banana SHell 2.5");
     return 0;
 
 }
