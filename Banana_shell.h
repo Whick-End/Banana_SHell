@@ -56,6 +56,9 @@ char *get_input(char *m_cli);
 // Clear array for execution
 char **clear_array(char *m_line, char *m_delimitation);
 
+// Run command(s)
+int execute_command(char *m_line);
+
 // Create a new process to start command input
 int start_processes(char **m_args);
 
