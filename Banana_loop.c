@@ -6,9 +6,8 @@ char shell_continue;
 
 int banana_loop(void) {
 
-    int i;
-    long int pipe_command_size = BUF_SIZE;
-    char **check_env = NULL, **line_clean = NULL;
+    int i = 0;
+    char **cmd_array = NULL;
     char *line = NULL, *prompt = NULL;
 
     // Catch Control-C
@@ -55,96 +54,33 @@ int banana_loop(void) {
             // Save command
             add_history(line);
 
+            // Execute command(s)
 
-                // Execute command(s)
-
-                // If any pipe(s)
-            if (strchr(line, '|')) {
+            // If in line, we have more than 1 command
+            if (strchr(line, ';')) {
                 
-                /***
-                * 
-                * If User enter pipe,
-                * pipe_command is egal to all the commands without pipe and any delimitations
-                * Each command are separate by index, for example:
-                * pipe_command[0][0] = "ls"
-                * pipe_command[0][1] = "-l"
-                * 
-                * pipe_command[1][0] = "wc"
-                *
-                ***/
-
-                char ***pipe_command = (char ***)calloc(pipe_command_size, sizeof(char *));
+                // Separate each command 
+                cmd_array = clear_array(line, ";");
                 
-                if (!pipe_command || errno)
+                if (!cmd_array || errno)
                     return EOF;
 
-                // Separate each command, without '|'
-                line_clean = clear_array(line, "|");
+                // Execute each command
+                for (i = 0; cmd_array[i] != NULL; i++) {
 
-                if (!line_clean || errno)
-                    return EOF;
-
-                for (i = 0; line_clean[i] != NULL; i++) {
-
-                    // If pipe_command are smaller than the input user, realloc pipe_command
-                    if (i <= pipe_command_size) {
-
-                        pipe_command_size += BUF_SIZE;
-                        pipe_command = (char ***)realloc(pipe_command, sizeof(char *) * pipe_command_size);
-
-                        if (!pipe_command || errno)
-                            return EOF;
-
-                    }
-
-
-                    check_env = clear_array(line_clean[i], DELIMT);
-
-                    // Check if environnement variable
-                    if (replace_env_var(check_env) == EOF || errno)
-                        return EOF;
-
-                    // Each command have their own index
-                    pipe_command[i] = check_env;
-
-                    if (!pipe_command[i] || errno)
+                    if (execute_command(cmd_array[i]) == EOF || errno)
                         return EOF;
 
                 }
 
-                // Set the Null Byte character in the end of the array of commands
-                pipe_command[i] = NULL;
-                
-                if (start_pipe_processes(pipe_command) == EOF || errno)
+            }
+
+            else {
+
+                if (execute_command(line) == EOF || errno)
                     return EOF;
-                
-                // Clear the heap
-                for (i = 0; pipe_command[i] != NULL; i++)
-                    free(pipe_command[i]);
-                
-                //Finish by clear the pipe_command
-                free(pipe_command);
-                    
-                }
 
-                // Start process without pipe
-                else {
-
-                    // Take off the delimitation, like spaces
-                    line_clean = clear_array(line, DELIMT);                   
-                    
-                    if (replace_env_var(line_clean) == EOF || errno)
-                        return EOF;
-
-                    if (!line_clean || errno)
-                        return EOF;
-
-                    if (start_processes(line_clean) == EOF || errno)
-                        return EOF;
-
-                    free(line_clean);
-                
-                }
+            }
 
         }
 
@@ -152,9 +88,10 @@ int banana_loop(void) {
         free(prompt);
         // Delete the user input
         free(line);
+        // Delete commands
+        free(cmd_array);
 
     }
-
 
     return 0;
 
