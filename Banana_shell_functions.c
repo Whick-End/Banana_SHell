@@ -315,6 +315,109 @@ int wait_parent_process(pid_t m_pid) {
 
 }
 
+int execute_command(char *m_line) {
+
+    // To loop
+    int i;
+    // To get each command
+    char **line_clean = NULL;
+    long int pipe_command_size = BUF_SIZE;
+
+    // If any pipe(s)
+    if (strchr(m_line, '|')) {
+        
+        /***
+        * 
+        * If User enter pipe,
+        * pipe_command is egal to all the commands without pipe and any delimitations
+        * Each command are separate by index, for example:
+        * pipe_command[0][0] = "ls"
+        * pipe_command[0][1] = "-l"
+        * 
+        * pipe_command[1][0] = "wc"
+        *
+        ***/
+
+        char ***pipe_command = (char ***)calloc(pipe_command_size, sizeof(char *));
+        
+        if (!pipe_command || errno)
+            return EOF;
+
+        // Separate each command, without '|'
+        line_clean = clear_array(m_line, "|");
+
+        if (!line_clean || errno)
+            return EOF;
+
+        for (i = 0; line_clean[i] != NULL; i++) {
+
+            // If pipe_command are smaller than the input user, realloc pipe_command
+            if (i <= pipe_command_size) {
+
+                pipe_command_size += BUF_SIZE;
+                pipe_command = (char ***)realloc(pipe_command, sizeof(char *) * pipe_command_size);
+
+                if (!pipe_command || errno)
+                    return EOF;
+
+            }
+
+            line_clean = clear_array(line_clean[i], DELIMT);
+
+            // Check if environnement variable
+            if (replace_env_var(line_clean) == EOF || errno)
+                return EOF;
+
+            // Each command have their own index
+            pipe_command[i] = line_clean;
+
+            if (!pipe_command[i] || errno)
+                return EOF;
+
+        }
+
+        // Set the Null Byte character in the end of the array of commands
+        pipe_command[i] = NULL;
+        
+        if (start_pipe_processes(pipe_command) == EOF || errno)
+            return EOF;
+        
+        // Clear the heap
+        for (i = 0; pipe_command[i] != NULL; i++)
+            free(pipe_command[i]);
+        
+        // Delete line_clean
+        free(line_clean);
+
+        // Finish by clear the pipe_command
+        free(pipe_command);
+        
+    }
+
+
+    // Start process without pipe
+    else {
+
+        // Take off the delimitation, like spaces
+        line_clean = clear_array(m_line, DELIMT);                   
+        
+        if (replace_env_var(line_clean) == EOF || errno)
+            return EOF;
+
+        if (!line_clean || errno)
+            return EOF;
+
+        if (start_processes(line_clean) == EOF || errno)
+            return EOF;
+
+        free(line_clean);
+    
+    }
+
+    return 0;
+
+}
+
 int start_processes(char **m_args) {
 
     // If m_args is null
