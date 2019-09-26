@@ -37,6 +37,11 @@
 #ifndef __APPLE__
   #define RL_GREEN "\001\e[38;5;118m\002"
   #define RL_YELLOW "\001\e[38;5;226m\002"
+
+#else
+    #define RL_GREEN ""
+    #define RL_YELLOW ""
+
 #endif
 
 #define RL_RESET "\001\e[0m\002"
