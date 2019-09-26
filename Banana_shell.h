@@ -33,11 +33,10 @@
 #define BLUE "\e[38;5;110m"
 #define RESET "\e[37m"
 
-// ReadLine colors
-#define RL_GREEN "\1\e[38;5;118m\2"
-#define RL_YELLOW "\1\e[38;5;226m\2"
-#define RL_RESET "\1\e[37m\2"
-
+// Readline colors
+#define RL_GREEN "\001\e[38;5;118m\002"
+#define RL_YELLOW "\001\e[38;5;226m\002"
+#define RL_RESET "\001\e[37m\002"
 typedef struct passwd passwd;
 extern char shell_continue;
 
