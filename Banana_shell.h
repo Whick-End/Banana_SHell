@@ -44,6 +44,7 @@
 
 #endif
 
+#define RL_LAST_COLOR RL_GREEN
 #define RL_RESET "\001\e[0m\002"
 
 typedef struct passwd passwd;
