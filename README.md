@@ -16,6 +16,8 @@
   
   * You can do pipe, like that **ls | wc**, or what you want
   
+  * We can do many commands in only one line ! With **;** like ***mkdir banana ; cd banana***
+  
   * Environnement variable can be change, create with **export**, **echo**, or delete with **unset**
   
   * Specific commands, are **help** and **banana**
