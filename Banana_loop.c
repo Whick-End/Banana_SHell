@@ -6,7 +6,7 @@ char shell_continue;
 
 int banana_loop(void) {
 
-    int i = 0;
+    unsigned int i = 0;
     char **cmd_array = NULL;
     char *line = NULL, *prompt = NULL;
 
@@ -86,10 +86,15 @@ int banana_loop(void) {
 
         // Delete prompt
         free(prompt);
+        prompt = NULL;
+
         // Delete the user input
         free(line);
+        line = NULL;
+
         // Delete commands
         free(cmd_array);
+        cmd_array = NULL;
 
     }
 
