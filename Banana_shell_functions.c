@@ -122,7 +122,7 @@ char **clear_array(char *m_line, char *m_delimitation) {
     if (!m_line || !m_delimitation)
         return NULL;
 
-    int i, buffer_size = BUF_SIZE;
+    unsigned int i, buffer_size = BUF_SIZE;
     char **array_of_tokens = (char **)calloc(buffer_size, sizeof(char *));
     char *token = NULL;
 
@@ -218,7 +218,7 @@ int replace_env_var(char **m_args) {
         return EOF;
 
     char *env_var = NULL;
-    int i;
+    unsigned int i;
 
     for (i = 0; m_args[i] != NULL; i++) {
 
@@ -318,7 +318,7 @@ int wait_parent_process(pid_t m_pid) {
 int execute_command(char *m_line) {
 
     // To loop
-    int i;
+    unsigned int i;
     // To get each command
     char **line_clean = NULL;
     long int pipe_command_size = BUF_SIZE;
@@ -383,15 +383,21 @@ int execute_command(char *m_line) {
             return EOF;
         
         // Clear the heap
-        for (i = 0; pipe_command[i] != NULL; i++)
+        for (i = 0; pipe_command[i] != NULL; i++) {
+
             free(pipe_command[i]);
-        
+            pipe_command[i] = NULL;
+
+        }
+
         // Delete line_clean
         free(line_clean);
+        line_clean = NULL;
 
         // Finish by clear the pipe_command
         free(pipe_command);
-        
+        pipe_command = NULL;
+
     }
 
 
@@ -411,6 +417,7 @@ int execute_command(char *m_line) {
             return EOF;
 
         free(line_clean);
+        line_clean = NULL;
     
     }
 
@@ -483,7 +490,7 @@ int start_pipe_processes(char ***m_pipe_command) {
     if (!m_pipe_command || !*m_pipe_command[0])
       return EOF;
 
-    int save_stdin_of_last_command, fd[2] = {0};
+    unsigned int save_stdin_of_last_command, fd[2] = {0};
     pid_t pid;
 
     /***
