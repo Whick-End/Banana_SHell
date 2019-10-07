@@ -381,7 +381,7 @@ int execute_command(char *m_line) {
         
         if (start_pipe_processes(pipe_command) == EOF || errno)
             return EOF;
-        /***
+        
         // Clear the heap
         for (i = 0; pipe_command[i] != NULL; i++) {
 
@@ -397,7 +397,7 @@ int execute_command(char *m_line) {
         // Finish by clear the pipe_command
         free(pipe_command);
         pipe_command = NULL;
-        **/
+        
 
     }
 
