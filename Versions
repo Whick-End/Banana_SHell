@@ -9,3 +9,5 @@
      https://stackoverflow.com/questions/9468435/how-to-fix-column-calculation-in-python-readline-if-using-color-prompt
      
 2.5: Replace home_directory to ~
+
+2.6: Fix some bugs and clean codes
