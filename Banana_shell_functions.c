@@ -325,7 +325,7 @@ int execute_command(char *m_line) {
 
     // If any pipe(s)
     if (strchr(m_line, '|')) {
-        
+
         /***
         * 
         * If User enter pipe,
@@ -381,7 +381,7 @@ int execute_command(char *m_line) {
         
         if (start_pipe_processes(pipe_command) == EOF || errno)
             return EOF;
-        
+        /***
         // Clear the heap
         for (i = 0; pipe_command[i] != NULL; i++) {
 
@@ -397,6 +397,7 @@ int execute_command(char *m_line) {
         // Finish by clear the pipe_command
         free(pipe_command);
         pipe_command = NULL;
+        **/
 
     }
 
@@ -405,7 +406,7 @@ int execute_command(char *m_line) {
     else {
 
         // Take off the delimitation, like spaces
-        line_clean = clear_array(m_line, DELIMT);                   
+        line_clean = clear_array(m_line, DELIMT);
         
         if (replace_env_var(line_clean) == EOF || errno)
             return EOF;
