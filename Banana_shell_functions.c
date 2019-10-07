@@ -320,7 +320,7 @@ int execute_command(char *m_line) {
     // To loop
     unsigned int i;
     // To get each command
-    char **line_clean = NULL;
+    char **line_clean = NULL, **commands_and_args = NULL;
     long int pipe_command_size = BUF_SIZE;
 
     // If any pipe(s)
@@ -333,19 +333,19 @@ int execute_command(char *m_line) {
         * Each command are separate by index, for example:
         * pipe_command[0][0] = "ls"
         * pipe_command[0][1] = "-l"
-        * 
+        *
         * pipe_command[1][0] = "wc"
         *
         ***/
 
         char ***pipe_command = (char ***)calloc(pipe_command_size, sizeof(char *));
-        
+
         if (!pipe_command || errno)
             return EOF;
 
         // Separate each command, without '|'
         line_clean = clear_array(m_line, "|");
-
+        
         if (!line_clean || errno)
             return EOF;
 
@@ -362,14 +362,14 @@ int execute_command(char *m_line) {
 
             }
 
-            line_clean = clear_array(line_clean[i], DELIMT);
-
+            commands_and_args = clear_array(line_clean[i], DELIMT);
+            
             // Check if environnement variable
-            if (replace_env_var(line_clean) == EOF || errno)
+            if (replace_env_var(commands_and_args) == EOF || errno)
                 return EOF;
 
             // Each command have their own index
-            pipe_command[i] = line_clean;
+            pipe_command[i] = commands_and_args;
 
             if (!pipe_command[i] || errno)
                 return EOF;
@@ -397,10 +397,8 @@ int execute_command(char *m_line) {
         // Finish by clear the pipe_command
         free(pipe_command);
         pipe_command = NULL;
-        
 
     }
-
 
     // Start process without pipe
     else {
