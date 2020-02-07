@@ -267,6 +267,9 @@ int export(char **m_export_command) {
     if (setenv(clear_name_value[0], clear_name_value[1], 1) == EOF || errno)
         return EOF;
     
+    free(clear_name_value);
+    clear_name_value = NULL;
+
     return 0;
 
 }
