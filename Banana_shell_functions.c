@@ -262,13 +262,16 @@ int export(char **m_export_command) {
 
     if (!clear_name_value || errno)
         return EOF;
-
-    // clear_name_value[0] = Name, clear_name_value[1] = Value
-    if (setenv(clear_name_value[0], clear_name_value[1], 1) == EOF || errno)
-        return EOF;
     
+    // clear_name_value[0] = Name, clear_name_value[1] = Value
+    int ret = setenv(clear_name_value[0], clear_name_value[1], 1);
+
     free(clear_name_value);
     clear_name_value = NULL;
+
+    // Check
+    if (ret == EOF || errno)
+        return EOF;
 
     return 0;
 
