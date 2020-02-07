@@ -229,8 +229,7 @@ int replace_env_var(char **m_args) {
             // If getenv failed or the NAME is wrong
             if (!env_var || errno) {
                 
-                m_args[i][0] = ' ';
-                m_args[i][1] = '\0';
+                m_args[i][0] = '\0';
                 return 0;
 
             }
@@ -252,6 +251,10 @@ int export(char **m_export_command) {
 
     // If threre aren't name with export command
     if (!m_export_command[1])
+        return 0;
+
+    // If the command haven't '='
+    if (strchr(m_export_command[1], '=') == NULL)
         return 0;
 
     // Separate the name and the value
