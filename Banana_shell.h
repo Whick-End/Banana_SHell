@@ -63,7 +63,7 @@ char *get_banana_shell(void);
 char *get_input(char *m_cli);
 
 // Clear array for execution
-char **clear_array(char *m_line, char *m_delimitation);
+char **clear_array(char *m_line, const char *m_delimitation);
 
 // Run command(s)
 int execute_command(char *m_line);
