@@ -7,7 +7,7 @@ char shell_continue;
 char *get_banana_shell(void) {
 
     // Declare and initialize all variables
-    int status_hostname = 0, i = 0;
+    int i = 0;
     long int size_cli = 0, length_home = 0;
     char *current_directory = NULL, *home_directory = NULL;
     char *username = NULL, *banana_shell = NULL;
@@ -15,12 +15,6 @@ char *get_banana_shell(void) {
 
     passwd *pw = NULL;
     uid_t uid = -2;
-
-    // Get Hostname in /proc/sys/kernel/hostname
-    status_hostname = gethostname(hostname, HOST_BUF);
-
-    if (status_hostname == EOF || errno)
-        return NULL;
 
     // Get User
     uid = geteuid();
