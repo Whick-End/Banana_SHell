@@ -107,7 +107,7 @@ char *get_input(char *m_banana_shell) {
 
 }
 
-char **clear_array(char *m_line, char *m_delimitation) {
+char **clear_array(char *m_line, const char *m_delimitation) {
 
     /***
     *
@@ -122,8 +122,8 @@ char **clear_array(char *m_line, char *m_delimitation) {
     if (!m_line || !m_delimitation)
         return NULL;
 
-    unsigned int i, buffer_size = BUF_SIZE;
-    char **array_of_tokens = (char **)calloc(buffer_size, sizeof(char *));
+    unsigned int i = 0;
+    char **array_of_tokens = (char **)calloc(strlen(m_line), sizeof(char *));
     char *token = NULL;
 
     if (!array_of_tokens || errno)
@@ -132,9 +132,6 @@ char **clear_array(char *m_line, char *m_delimitation) {
     // Set delimitation
     token = strtok(m_line, m_delimitation);
 
-    if (!token || errno)
-        return NULL;
-
     for (i = 0; token != NULL; i++) {
 
         // Set each word and their index
@@ -142,27 +139,12 @@ char **clear_array(char *m_line, char *m_delimitation) {
         // Separate with delimitation
         token = strtok(NULL, m_delimitation);
 
-        // If the buffer_size if smaller than m_line, realloc
-        if (buffer_size >= i) {
-
-            buffer_size += BUF_SIZE;
-            array_of_tokens = (char **)realloc(array_of_tokens, sizeof(char *) * buffer_size);
-
-            if (!array_of_tokens || errno)
-                return NULL;
-
-        }
-
     }
-
-    // Set the NULL char
-    array_of_tokens[i] = NULL;
 
     if (errno)
         return NULL;
 
     return array_of_tokens;
-
 }
 
 char *getHomeDirectory(void) {
