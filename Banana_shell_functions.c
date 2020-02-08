@@ -123,7 +123,7 @@ char **clear_array(char *m_line, const char *m_delimitation) {
         return NULL;
 
     unsigned int i = 0;
-    char **array_of_tokens = (char **)calloc(strlen(m_line), sizeof(char *));
+    char **array_of_tokens = (char **)calloc(strlen(m_line)+1, sizeof(char *));
     char *token = NULL;
 
     if (!array_of_tokens || errno)
@@ -312,7 +312,6 @@ int execute_command(char *m_line) {
     unsigned int i;
     // To get each command
     char **line_clean = NULL, **commands_and_args = NULL;
-    long int pipe_command_size = BUF_SIZE;
 
     // If any pipe(s)
     if (strchr(m_line, '|')) {
@@ -329,7 +328,7 @@ int execute_command(char *m_line) {
         *
         ***/
 
-        char ***pipe_command = (char ***)calloc(pipe_command_size, sizeof(char *));
+        char ***pipe_command = (char ***)calloc(strlen(m_line)+1, sizeof(char *));
 
         if (!pipe_command || errno)
             return EOF;
@@ -341,17 +340,6 @@ int execute_command(char *m_line) {
             return EOF;
 
         for (i = 0; line_clean[i] != NULL; i++) {
-
-            // If pipe_command are smaller than the input user, realloc pipe_command
-            if (i <= pipe_command_size) {
-
-                pipe_command_size += BUF_SIZE;
-                pipe_command = (char ***)realloc(pipe_command, sizeof(char *) * pipe_command_size);
-
-                if (!pipe_command || errno)
-                    return EOF;
-
-            }
 
             commands_and_args = clear_array(line_clean[i], DELIMT);
             
@@ -366,9 +354,6 @@ int execute_command(char *m_line) {
                 return EOF;
 
         }
-
-        // Set the Null Byte character in the end of the array of commands
-        pipe_command[i] = NULL;
         
         if (start_pipe_processes(pipe_command) == EOF || errno)
             return EOF;
