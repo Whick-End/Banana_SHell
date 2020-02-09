@@ -11,6 +11,7 @@ char *get_banana_shell(void) {
     long int size_cli = 0, length_home = 0;
     char *current_directory = NULL, *home_directory = NULL;
     char *username = NULL, *banana_shell = NULL;
+    char *saved_addr = NULL;
     char hostname[HOST_BUF];
 
     passwd *pw = NULL;
@@ -34,6 +35,8 @@ char *get_banana_shell(void) {
 
     if (!current_directory || errno)
         return NULL;
+
+    saved_addr = current_directory;
 
     // Get home directory
     home_directory = getHomeDirectory();
@@ -90,6 +93,10 @@ char *get_banana_shell(void) {
 
     // Save CLI
     (void)sprintf(banana_shell ,"%s%s%s:%s%s %s%s%s /> ", RL_YELLOW, hostname, RL_RESET, RL_YELLOW, username, RL_LAST_COLOR, current_directory, RL_RESET);
+
+    free(saved_addr);
+    saved_addr = NULL;
+    current_directory = NULL;
 
     return banana_shell;
 
