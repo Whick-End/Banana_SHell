@@ -21,7 +21,6 @@
 
 #define TRUE 1
 #define FALSE 0
-#define BUF_SIZE 256
 #define HOST_BUF 2048
 
 // Colors
